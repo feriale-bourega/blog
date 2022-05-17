@@ -1,0 +1,9 @@
+##### Page profil.php #########
+==>Problème mettre lorsqu'il est empty 
+pour le login, et l'email = aussi vérif avec mot de passe
+==>revoir les massages de gestion d'erreurs car cela s'affiche dans tous les inputs
+
+##### Page header.php #########
+
+##### Page class_user.php #########
+supprimer la méthode getAllInfos de la résa et mettre ce qu'il faut

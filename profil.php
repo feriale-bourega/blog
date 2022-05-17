@@ -1,83 +1,98 @@
-<?php 
-session_start();
-var_dump("test");
-//La page ne s'affiche que si la SESSION 'connexion' est bien crée (en page connexion)
-//if(!isset($_SESSION['connexion']))
-//{
-  //  Autrement on redirige vers connexion
-    //header('location: connexion.php');
-    //exit();
-//}
-//ici on stocke le contenu de la variable SESSION (le login entré precedemment) dans $loginverify
-//pour pouvoir l'utiliser pour fixer la ligne lors de la requete UPDATE
-//$loginverify = $_SESSION['connexion'];
+<?php
+include 'assets/include/header.php';
 
-require('utilisateurs.php');
- //$user = new User($_POST['login'], $_POST['password']);
- $paul = new User();
- if(isset($_POST['submit'])){
-	//if($password==$password2)
-	
-		//hachage du password
-		//$password3 = password_hash($password, PASSWORD_BCRYPT, array('cost' =>10 ));
-        
-         $paul->getAllinfos($_POST['login'], $_POST['prenom'], $_POST['nom'], $_POST['password'], $_POST['password3']);
-		// if ($count == 0){
-    $g = $paul->update($_POST['login'], $_POST['prenom'], $_POST['nom'], $_POST['password'], $_POST['password3']);
-		 
-		}   
-		?>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="user.css" >
-        <title>Profil</title>
-    </head>  
-
-    <body class="bodyinscription">
-        <header class="header_ins">
-            <h1>Profil</h1>
-        </header>
-
-        <main class="main_ins">
-            <section class="boite_ins">
-                <form class="form_ins" action="profil.php" method="post">
-                <h1 class="head_profile">Modifiez vos informations</h2>
-                    <article class="pseudo_ins">
-                        <label for="login">Votre pseudo :</label>
-                        <input type="text" id="login" name="login" required>
-                    </article>
-                    <article class="firstName_ins">
-                        <label for="prenom">Prénom :</label>
-                        <input type="text" id="enterFirstName" name="prenom" required>
-                    </article>
-                    <article class="lastName_ins">
-                        <label for="nom">Nom :</label>
-                        <input type="text" id="enterLastName" name="nom" required>
-                    </article>
-                    <article class="mp_ins">
-                        <label for="password">Votre mot de passe : </label>
-                        <input type="password" id="password" name="password" required>
-                    </article>
-                    <article class="mp_ins">
-                        <label for="password3">Confirmez votre mot de passe :</label>
-                        <input type="password" id="password3" name="password3" >
-                    </article>      
-                    <article class="button_ins">
-                        <button type="submit" name="submit">Valider</button>
-                    </article>
-                    <a style="color:white; text-decoration:none;" href="deconnexion.php">Deconnexion</a>
+if(!$_SESSION)
+    {
+        header("Location:index.php");
+    }
+ 
+if(isset($_POST['submit']))
+{
+    $user->updatelogin($_POST['login']);
+}
+// var_dump($_SESSION);
+// var_dump($_POST['submit']);
+?>
+<main class="main-first">
+    <h2 class="main-first">Bienvenue :  <?=   $_SESSION["user"]["login"] //$_SESSION["admin"][0]["login"]  ?></h2>
+    <section class="Profil">
+        <article>
+            <div class="login-form">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" name="login" value="" placeholder="Identifiant">
+                        </div>
+                        <?php
+                        if(isset($_SESSION['error']))
+                        {
+                            echo $_SESSION['error'];
+                        }
+                        ?>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info" value="mise à jour du login">
+                    </div>
                 </form>
-            </section>
-        </main>
-
-        <footer class="footer_ins">
-            
-        </footer>
+            </div>
+        </article>
         
-    
-    </body>
-</html>
+        <?php
+        $userEmail = new User();
+        if (isset($_POST['submit-login'])) {
+            $userEmail->updateEmail($_POST['email']);
+        }
+        ?>
+        <article>
+            <div class="email-form">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="text" name="email" value="" placeholder="email">
+                        </div>
+                        <?php
+                        if(isset($_SESSION['error']))
+                        {
+                            echo $_SESSION['error'];
+                        }
+                        ?>
+                    <div class="form-group">
+                        <input type="submit" name="submit-login" class="btn btn-info" value="mise à jour de l'email">
+                    </div>
+                </form>
+            </div>
+        </article>
+
+        <?php
+        $userData = new User();
+        if (isset($_POST['register'])) {
+            $userData->updatepassword($_POST['password'], $_POST['passwordConfirm']);
+        }
+        ?>
+        <article>
+            <div class="login-form">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="password" name="password" value="" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="passwordConfirm" value="" placeholder="passwordConfirm">
+                    </div>
+                    <?php
+                        if(isset($_SESSION['error']))
+                        {
+                            echo $_SESSION['error'];
+                        }
+                        ?>
+
+                    <button type="register" name="register" class="btn btn-info" value="mise à jour du password">Mise à jour du password</button>
+                </form>
+            </div>
+        </article>
+
+    </section>
+<h2 class="main-first">Voici vos  informations. Votre identifiant est  <?= $_SESSION["user"]["login"] //$_SESSION["admin"][0]["login"] ?>
+ et votre email est  "<?= $_SESSION["user"]["email"] //$_SESSION["admin"][0]["email"] ?>".</h2>
+
+</main>
+<?php 
+include 'assets/include/footer.php';
+unset($_SESSION['error']);
+?>

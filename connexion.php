@@ -1,62 +1,66 @@
 <?php
-                    session_start();
-                    require_once('header.php');
-                    require_once('utilisateurs.php');
-                    $mathilde = new User();
-                    if(isset($_POST['submit'])){
-                        $p = $mathilde->connect($_POST['login'], $_POST['password']);
-    
-    //Decryptage du password 
-   // $hash = password_hash($password, PASSWORD_DEFAULT);
-   // $verify = password_verify($password, $hash);
-   // }  
-    
-    //si verify existe
-   // if($password==true)
-    //{
-      // $_SESSION['connexion'] =  $login ;
-   //}
-           header('Location: profil.php');}
+$title = 'Connexion';
+include 'assets/include/header.php';
+// include 'class/User.php';
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="user.css" >
-        <title>Connexion</title>
-        <article class="linkcreate">
-                        <a style="color:black; text-decoration:none;" class="boutton_nav" href="inscription.php">Créer un compte</a><br/>
-                        <a style="color:black; text-decoration:none;" class="boutton_nav" href="profil.php">Profil</a>
-                    </article>
-    </head>
+<main class="main-first">
+    <div class="login-form">
+        <form method="post">
+            <h2 class="text-center">Connexion</h2>
+            <div class="form-group">
+                <?php if (isset($_GET['reg_err'])) {
+                    $err = htmlspecialchars($_GET['reg_err']);
 
-    <body class="bodyinscription">
+                    switch ($err) {
+                        case 'success':
+                ?>
+                            <div class="alert alert-success">
+                                <strong>Succès</strong> inscription réussie !
+                            </div>
+                        <?php
+                            break;
+                    }
+                }
+                if (isset($_GET['login_err'])) {
+                    $err = htmlspecialchars($_GET['login_err']);
 
-        <header class="header_ins">
-            <h1>Connexion</h1>
-        </header>
+                    switch ($err) {
+                        case 'password':
+                        ?>
+                            <div class="alert alert-danger">
+                                <strong>Erreur</strong> informations incorrect
+                            </div>
+                <?php
+                            break;
+                    }
+                }
+                ?>
 
-        <main class="main_ins">
-            <section class="boite_ins">
-                <form class="form_ins" action="connexion.php" method="post">
-                    <article class="pseudo_ins">
-                        <label for="pseudo">Votre pseudo :</label>
-                        <input type="text" id="pseudo" name="login" required>
-                    </article>
-                    <article class="mp_ins">
-                        <label for="motdepasse">Votre mot de passe :</label>
-                        <input type="password" id="motdepasse" name="password" required>
-                    </article>
-                    <article class="button_ins">
-                        <button type="submit" name="submit" >Valider</button>
-                    </article>
-                </form>
-                </section>
-        </main>
+                <div class="form-group">
+                    <label for="InputLogin">Login</label>
+                    <input type="text" class="form-control" name="login" placeholder="identifiant">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword1">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="MDP">
+                </div>
 
-    </body>
-</html>
+                <button type="submit" class="btn btn-primary" name="submit" value="se connecter">Connexion</button>
 
-		
-			 
+        </form>
+        </section>
+
+        <?php 
+        if (isset($_POST['submit']) && ($_POST['password'])) {
+            $user->connect($_POST['login'], $_POST['password']);
+                header('Location: profil.php');
+
+            
+        } ?>
+    </div>
+    </div>
+</main>
+<?php 
+include 'assets/include/footer.php'; 
+?>

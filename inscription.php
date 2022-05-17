@@ -1,70 +1,73 @@
 <?php
-require('header.php');
- require_once('utilisateurs.php');
-$pierre = new User();
- if(isset($_POST['submit'])){
-    $g = $pierre->register($_POST['login'], $_POST['password'], $_POST['password2'], $_POST['email']);
-    var_dump($g);
-     header('Location: connexion.php');
-    }
-    
+$title = 'Inscription';
+include 'assets/include/header.php';
 ?>
+<main class="main-first">
+    <div class="login-form">
+        <form method="post">
+            <h2 class="text-center">Inscription</h2>
+            <div class="form-group">
+                <?php
+                if (isset($_GET['reg_err'])) {
+                    $err = htmlspecialchars($_GET['reg_err']);
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link  rel="stylesheet" type="text/css" href="user.css">
-        <title>Inscription</title>
-    </head>  
+                    if (isset($_POST['submit'])) {
+                        $Datas = $user->register($_POST['login'], $_POST['password'], $_POST['passwordConfirm'], $_POST['email']);
+                    }
+                    switch ($err) {
+                        case 'success':
+                ?>
+                            <div class="alert alert-success">
+                                <strong>Succès</strong> inscription réussie !
+                            </div>
+                        <?php
+                            break;
 
-    <body class="bodyinscription">
-        <header class="header_ins">
-            <h1>Inscription</h1>
-        </header>
+                        case 'password':
+                        ?>
+                            <div class="alert alert-danger">
+                                <strong>Erreur</strong> mot de passe différent
+                            </div>
+                        <?php
+                            break;
 
-        <main class="main_ins">
-            <section class="boite_ins">
-                <form class="form_ins" action="inscription.php" method="post">
-                    <article class="pseudo_ins">
-                        <label for="login">Votre pseudo :</label>
-                        <input type="text" id="login" name="login" <?php //echo $erreur_login;?>>
-                    </article>
-                    <article class="email_ins">
-                        <label for="enteremail">Email :</label>
-                        <input type="text" id="enteremail" name="email" <?php //echo $erreur_prenom;?>>
-                    </article>
-                    
-                    <article class="mp_ins">
-                        <label for="enterMp">Mot de passe : </label>
-                        <input type="password" id="enterMp" name="password" <?php //echo $erreur_mdp;?>>
-                    </article>    
-                    <article class="mp_ins">
-                        <label for="confirmMp">Confirmez votre mot de passe :</label>
-                        <input type="password" id="confirmMp" name="password2" <?php //echo $erreur_mdp2;?>>
+                        case 'already':
+                        ?>
+                            <div class="alert alert-danger">
+                                <strong>Erreur</strong> compte deja existant
+                            </div>
+                <?php
 
-                    </article>  
-                    <article class="button_ins">
-                        <button type="submit" value="Submit"  name="submit">Valider</button><br/>
-                        <a style="color:white; text-decoration:none;" class="boutton_nav" href="index.php">Retour accueil</a>
-                        
-                    </article>
-                    <?php
-                    
-            //echo $user->getLogin(). '<br>';
-            //echo $user->getPassword().'<br>';
-           
-        ?>
-                </form>
-                
-            </section>
-        </main>
-        <?php  //include('../pages/footer.php')  ?> 
-        <footer class="footer_ins">
-            
-        </footer>
-        
-    
-    </body>
-    </html>
+                    }
+                }
+                ?>
+                <div class="form-group">
+                    <label for="InputLogin">Login</label>
+                    <input type="text" class="form-control" name="login" placeholder="identifiant">
+                </div>
+                <div class="form-group">
+                    <label for="InputLogin">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="email">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword1">Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="InputPassword1">Password Confirm</label>
+
+                    <input type="password" class="form-control" name="passwordConfirm">
+                </div>
+                <button type="submit" class="btn btn-primary" name="submit" value="s'inscrire">S'inscrire</button>
+            </div>
+        </form>
+    </div>
+</main>
+<?php
+if (isset($_POST['submit'])) {
+    $user->register($_POST['login'], $_POST['password'], $_POST['passwordConfirm'], $_POST['email']);
+}
+?>
+<?php
+include 'assets/include/footer.php';
+?>
