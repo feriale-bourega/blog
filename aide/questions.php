@@ -1,4 +1,0 @@
-untracked files meaning git
-https://koukia.ca/how-to-remove-local-untracked-files-from-the-current-git-branch-571c6ce9b6b1
-https://www.google.com/search?q=keep+untracked+files&client=firefox-b-d&sxsrf=AOaemvJaIGAy3t7UVDgbpSDFHwY5IIuXQA%3A1643219773283&ei=PYvxYafmEMCNjLsP-v6AgAM&ved=0ahUKEwjn-P7W_s_1AhXABmMBHXo_ADAQ4dUDCA0&uact=5&oq=keep+untracked+files&gs_lcp=Cgdnd3Mtd2l6EAMyBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeOgcIIxCwAxAnOgcIABBHELADSgQIQRgASgQIRhgAUIEXWJIbYLonaAFwAngAgAFHiAGGAZIBATKYAQCgAQHIAQnAAQE&sclient=gws-wiz
-https://git-scm.com/docs/git-stash/fr
